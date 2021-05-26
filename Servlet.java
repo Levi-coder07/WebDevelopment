@@ -1,7 +1,9 @@
 package com.mypage.com;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,15 +30,28 @@ public class Servlet extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+		response.getWriter().append("Server at: ").append(request.getContextPath()); 
+		String CUI=request.getParameter("CUI");
+		String Clave = request.getParameter("Clave");
+		Alumno alumno = new Alumno();
+		alumno.setCUI(CUI);
+		request.setAttribute("alumno", alumno);
+		alumno.setClave(Clave);
+		request.setAttribute("alumno", alumno);
+		RequestDispatcher rd;
+		rd = request.getRequestDispatcher("home.jsp");
+		rd.forward(request, response);
+				
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		//doGet(request, response);
 	}
 
 }
+
